@@ -31,6 +31,11 @@ public class PlayerMobile : MonoBehaviour
         // 1. Récupérer l'entrée du joystick
         Vector2 input = joystick.inputVector;
 
+        if (anim != null)
+        {
+            anim.SetFloat("Speed", input.magnitude);
+        }
+
         // Si on ne touche pas le joystick, on s'arrête
         if (input.magnitude < 0.1f) return;
 
