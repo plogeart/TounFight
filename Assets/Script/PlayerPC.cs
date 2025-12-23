@@ -2,71 +2,67 @@ using UnityEngine;
 
 public class PlayerPC : MonoBehaviour
 {
+    [Header("Paramètres")]
     public float moveSpeed = 5f;
-    public float rotationSpeed = 10f;
-    public Animator anim;
-    public Transform cameraTransform; // Glisse la Main Camera ici
-    // Variable pour stocker le collider du poing
+    public float rotationSpeed = 0.1f; // Lissage des virages
+
+    [Header("Combat")]
     public Collider weaponCollider;
+
+    private Animator anim;
+    private Transform camTransform;
+    private Rigidbody rb;
+
+    void Start()
+    {
+        anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
+        
+        if (Camera.main != null) camTransform = Camera.main.transform;
+    }
 
     void Update()
     {
-        // 1. ATTAQUE (Clic Gauche)
-        // 0 = Clic Gauche, 1 = Clic Droit, 2 = Molette
-        if (Input.GetMouseButtonDown(0))
-        {
-            if(anim != null) anim.SetTrigger("Attack");
-        }
-
-        // 2. MOUVEMENT
-        Move();
-    }
-
-    void Move()
-    {
-        // Récupère les touches (ZQSD ou Flèches) automatiquement
+        // --- 1. DÉPLACEMENTS ---
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
-
-        // Crée un vecteur de direction
-        Vector3 direction = new Vector3(h, 0, v);
-        float magnitude = direction.magnitude; // La "force" de l'appui (0 ou 1)
-
-        // Animation : On envoie la vitesse (pour le Blend Tree)
-        // On utilise Mathf.Clamp01 pour que ça ne dépasse pas 1
-        if (anim != null) anim.SetFloat("Speed", Mathf.Clamp01(magnitude));
-
-        // Si on ne bouge pas, on arrête tout
-        if (magnitude < 0.1f) return;
-
-        // --- DIRECTION RELATIVE A LA CAMERA ---
-        // C'est l'astuce pour que "Haut" soit toujours "Là où regarde la caméra"
-        Vector3 camFwd = cameraTransform.forward;
-        Vector3 camRight = cameraTransform.right;
         
-        camFwd.y = 0; // On ne veut pas voler vers le ciel
-        camRight.y = 0;
-        
-        camFwd.Normalize();
-        camRight.Normalize();
+        Vector3 moveDir = new Vector3(h, 0, v).normalized;
+        float inputMagnitude = moveDir.magnitude; 
 
-        Vector3 moveDir = (camFwd * v + camRight * h).normalized;
+        // On envoie la vitesse au Blend Tree
+        anim.SetFloat("Speed", inputMagnitude); 
 
-        // Rotation fluide du personnage
-        Quaternion targetRotation = Quaternion.LookRotation(moveDir);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        if (inputMagnitude >= 0.1f)
+        {
+            // Calcul de l'angle pour avancer dans la direction de la caméra
+            float targetAngle = Mathf.Atan2(moveDir.x, moveDir.z) * Mathf.Rad2Deg + camTransform.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref rotationSpeed, 0.1f);
+            
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-        // Déplacement physique (simple)
-        transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+            Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            transform.Translate(moveDirection.normalized * moveSpeed * Time.deltaTime, Space.World);
+        }
+
+        // --- 2. ATTAQUE ---
+        if (Input.GetButtonDown("Fire1"))
+        {
+            // J'ai supprimé la ligne RotateTowardsCamera() ici.
+            // Le personnage restera orienté comme il est.
+            
+            anim.SetTrigger("Attack");
+        }
     }
 
-    // Fonction appelée par l'animation au début du coup
-public void StartAttack() {
-    if (weaponCollider != null) weaponCollider.enabled = true;
-}
+    // --- EVENTS ANIMATION ---
+    public void StartAttack()
+    {
+        if (weaponCollider != null) weaponCollider.enabled = true;
+    }
 
-// Fonction appelée par l'animation à la fin du coup
-public void EndAttack() {
-    if (weaponCollider != null) weaponCollider.enabled = false;
-}
+    public void EndAttack()
+    {
+        if (weaponCollider != null) weaponCollider.enabled = false;
+    }
 }
