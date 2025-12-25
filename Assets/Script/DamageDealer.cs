@@ -12,8 +12,8 @@ public class DamageDealer : MonoBehaviour
         {
             // --- GESTION DES DÉGÂTS ---
             // On cherche le script de vie (soit sur l'objet touché, soit sur son parent)
-            EnemyStats enemy = other.GetComponent<EnemyStats>();
-            if (enemy == null) enemy = other.GetComponentInParent<EnemyStats>();
+            EnemyScript enemy = other.GetComponent<EnemyScript>();
+            if (enemy == null) enemy = other.GetComponentInParent<EnemyScript>();
 
             if (enemy != null)
             {

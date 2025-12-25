@@ -50,12 +50,23 @@
     <Analyzer Include="C:\Users\Pierr\Desktop\UnityProd\TounFight\Library\PackageCache\com.unity.dt.app-ui@8ac7e730dd5d\Runtime\MVVM\SourceGenerators\netstandard2.0\MVVMSourceGenerators.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Environnement\GateAndRune\RunesAndPortals\Rift\Scripts\Rift_Controller.cs" />
+    <Compile Include="Assets\Script\PortalSpawner.cs" />
+    <Compile Include="Assets\Environnement\GateAndRune\RunesAndPortals\RuneStone\Script\Runestone_Controller.cs" />
+    <Compile Include="Assets\Environnement\GateAndRune\RunesAndPortals\Vortex\Scripts\Vortex_Controller.cs" />
     <Compile Include="Assets\Script\DamageDealer.cs" />
+    <Compile Include="Assets\Environnement\GateAndRune\RunesAndPortals\Demo\Demo_Controller.cs" />
     <Compile Include="Assets\Script\SpineCorrector.cs" />
+    <Compile Include="Assets\Environnement\GateAndRune\RunesAndPortals\PortalRound\Script\PortalRound_Controller.cs" />
     <Compile Include="Assets\Script\CameraPC.cs" />
+    <Compile Include="Assets\Environnement\GateAndRune\RunesAndPortals\Demo\RotatorTool.cs" />
+    <Compile Include="Assets\Environnement\GateAndRune\RunesAndPortals\PortalGate\Scripts\PortalGate_Controller.cs" />
     <Compile Include="Assets\Script\EnemyScript.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Script\HeadLock.cs" />
+    <Compile Include="Assets\Script\PlayerHealthPlayerHealth.cs" />
+    <Compile Include="Assets\Script\EnemyAI.cs" />
+    <Compile Include="Assets\Environnement\GateAndRune\RunesAndPortals\PortalGate_Simple\Script\Portal_Controller.cs" />
     <Compile Include="Assets\Script\PlayerPC.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -67,18 +78,19 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\SDFFunctions.hlsl" />
+    <None Include="Assets\Environnement\GateAndRune\RunesAndPortals\ReadMe.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
-    <None Include="Assets\Environnement\Daniel Mistage\Stylized Fantasy Armory\Prefabs\Extra Content\Fantasy Female Character Hetalia - Props\README.txt" />
+    <None Include="Assets\Environnement\DecoStyleRDR\Stylized Fantasy Armory\Prefabs\Extra Content\Fantasy Female Character Hetalia - Props\README.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
-    <None Include="Assets\Environnement\Daniel Mistage\Stylized Fantasy Armory\Prefabs\Extra Content\Fantasy Female Character Leona - Props\README.txt" />
+    <None Include="Assets\Environnement\DecoStyleRDR\Stylized Fantasy Armory\Prefabs\Extra Content\Fantasy Female Character Leona - Props\README.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />

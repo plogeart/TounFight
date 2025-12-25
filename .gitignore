@@ -16,3 +16,6 @@ Thumbs.db
 *.private.meta
 ^*.private.[0-9]+$
 *.private.[0-9]+.meta
+
+Assets/Environnement/
+Assets/Environnement.meta

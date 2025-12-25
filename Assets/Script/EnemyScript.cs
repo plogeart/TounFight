@@ -1,25 +1,39 @@
 using UnityEngine;
 
-public class EnemyStats : MonoBehaviour
+public class EnemyScript : MonoBehaviour
 {
-    [Header("Santé")]
+    [Header("Stats")]
     public int maxHealth = 100;
-    public int currentHealth;
+    private int currentHealth;
+
+    [Header("Animations")]
+    public Animator anim;
+
+    // Pour éviter de taper un cadavre
+    private bool isDead = false;
 
     void Start()
     {
-        // Au début du jeu, le monstre a toute sa vie
         currentHealth = maxHealth;
+        
+        // Si l'animator n'est pas assigné manuellement, on le cherche sur l'objet
+        if (anim == null) anim = GetComponent<Animator>();
     }
 
-    // Cette fonction sera appelée par ton Poing
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damageAmount)
     {
-        currentHealth -= damage; // On enlève les PV
-        Debug.Log(transform.name + " a pris " + damage + " dégâts ! PV restants : " + currentHealth);
+        if (isDead) return; // On ne frappe pas un mort
 
-        // Si la vie tombe à 0, il meurt
-        if (currentHealth <= 0)
+        currentHealth -= damageAmount;
+
+        // 1. REACTION AU COUP (Hit Stun)
+        if (currentHealth > 0)
+        {
+            // Joue l'animation "Hit" si elle existe
+            if(anim != null) anim.SetTrigger("Hit");
+        }
+        // 2. MORT
+        else
         {
             Die();
         }
@@ -27,10 +41,18 @@ public class EnemyStats : MonoBehaviour
 
     void Die()
     {
-        Debug.Log(transform.name + " est MORT !");
+        isDead = true;
         
-        // Pour l'instant on détruit l'objet. 
-        // Plus tard, on mettra une animation de mort ou un effet de particules.
-        Destroy(gameObject); 
+        // Désactive le collider pour ne plus bloquer le joueur
+        GetComponent<Collider>().enabled = false;
+
+        if (anim != null)
+        {
+            // Joue l'animation de mort
+            anim.SetTrigger("Die");
+        }
+
+        // On détruit le corps après 5 secondes (le temps de voir l'animation)
+        Destroy(gameObject, 5f);
     }
 }
